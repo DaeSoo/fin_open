@@ -1,42 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Insert title here</title>
 </head>
 <body>
-<div class="page-content">
-  <div data-height="cover-header" class="caption bottom-0">
-      <div class="caption-center">
-          <div class="content-boxed left-40 right-40">
-              <div class="content top-20 bottom-40">
-                  <h1 class="center-text uppercase ultrabold fa-3x">OPEN PAY</h1>
-                  <p class="center-text font-11 under-heading bottom-30 color-highlight">
-                      금융위 API 를 활용한 결재 서비스
-                  </p>
-                  <div class="input-style has-icon input-style-1 input-required">
-                      <i class="input-icon fa fa-user font-11"></i>
-                      <span>아이디</span>
-                      <em>(필수)</em>
-                      <input type="text" id='id' placeholder="아이디">
-                  </div>
-                  <div class="input-style has-icon input-style-1 input-required">
-                      <i class="input-icon fa fa-lock font-11"></i>
-                      <span>비밀번호</span>
-                      <em>(필수)</em>
-                      <input type="password" id="password"  placeholder="비밀번호">
-                  </div>
-                  <div class="clear"></div>
-                  <a id='loginBtn' class="button button-full button-m shadow-large button-round-small bg-green1-dark top-30 bottom-0">로그인</a>
-                  <a href='/join' class="button button-full button-m shadow-large button-round-small bg-highlight top-10 bottom-0">회원가입</a>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+		<div class="login_wrap">	
+		<div class="login_content">	
+			<h1 class="login_logo"><span>	Data Platform Interface System</span></h1>
+			<div class="login_nav">
+				<h2>Welcome to Interface, Login</h2>	
+				<form id="fm01">
+					<div class="mb_20">
+						<input id="userid" name="userid" type="text" placeholder="User ID" title="아이디">
+					</div>
+					<div class="mb_20">
+						<input id="password" name="password" type="password" placeholder="Password" title="비밀번호">
+					</div>
+					<div>
+						<input type="button" value="LOGIN" class="login_btn">
+					</div>
+				</form>
+			</div>
 
+		</div>	
+	</div>
+	<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		
+		$("#login_btn").on("click", function(event){
+			login_ajax_submit();
+		});
+	});
+
+
+function login_ajax_submit(){
+	
+	var login = {
+				id : $("#userid").val()
+           , password : $("#password").val()
+	}
+	console.log(login);
+	
+	$.ajax({
+		type: "POST",
+		contentType:	"application/json",
+		url:	"/test/ajax",
+		data:	JSON.stringfy(login),
+		dataType: "json",
+		success:	function(data){
+			var rtn = data.success;
+			if(!rtn){
+				alert("로그인 실패");
+				return
+			}else{
+				alert("로그인 성공");
+				location.replace("/main")
+			}
+		}
+	});
+}
+	
+	</script>
 </body>
-
 
 
 </html>
