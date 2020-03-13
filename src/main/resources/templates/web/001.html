@@ -25,30 +25,37 @@
 
 		</div>	
 	</div>
-	<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
 	<script type="text/javascript">
 	
-	$(document).ready(function(){
-		
-		$("#login_btn").on("click", function(event){
+ 	$(document).ready(function(){
+				
+		$(".login_btn").on("click", function(){
+			
 			login_ajax_submit();
 		});
-	});
-
-
+	}); 
+	
+	
+/* $(".login_btn").click(function(){
+	alert("1");
+	login_ajax_submit();
+});
+ */
 function login_ajax_submit(){
 	
 	var login = {
 				id : $("#userid").val()
            , password : $("#password").val()
 	}
+	
 	console.log(login);
 	
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		contentType:	"application/json",
-		url:	"/test/ajax",
-		data:	JSON.stringfy(login),
+		url:	"/login",
+		data:	JSON.stringify(login),
 		dataType: "json",
 		success:	function(data){
 			var rtn = data.success;
