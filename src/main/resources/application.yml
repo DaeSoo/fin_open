@@ -3,19 +3,37 @@ server:
   
   
 spring:
-  thymeleaf:    mode: HTML5
+  thymeleaf:
+    mode: HTML5
     prefix: classpath:templates/
     check-template-location: true
     suffix: .html
     cache: false
-    
+
+  datasource:
+    url: jdbc:h2:file:~/tmp/testdb;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO
+    platform: h2
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: tlseotn1@
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
   h2:
    console:
      enabled: true
-     
-  devtools:    restart:      enabled: false      
+     path: /console
+
+  devtools:
+    restart:
+      enabled: false
   
-  http:    encoding:      charset: UTF-8
+  http:
+    encoding:
+      charset: UTF-8
       enabled: true
       force: true
       
