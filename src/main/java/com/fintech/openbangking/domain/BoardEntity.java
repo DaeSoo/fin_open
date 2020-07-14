@@ -1,24 +1,13 @@
 package com.fintech.openbangking.domain;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import com.fintech.openbangking.domain.enums.BoardType;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -26,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table
 @Builder
-public class Board {
+public class BoardEntity {
 	
 	@Id
 	@Column

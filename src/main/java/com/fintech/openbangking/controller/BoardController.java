@@ -1,39 +1,43 @@
 package com.fintech.openbangking.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fintech.openbangking.domain.Board;
+import com.fintech.openbangking.dto.BoardDto;
 import com.fintech.openbangking.service.BoardService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@RequestMapping("/board")
+@AllArgsConstructor
 public class BoardController {
+    private BoardService boardService;
 
-	
-	@Autowired
-	BoardService boardService;
-	
-	@GetMapping({"", "/"})
-	public String board(@RequestParam(value="idx", defaultValue ="0") Long idx,
-			Model model) {
-		model.addAttribute("board", boardService.findBoardByIdx(idx));
-		return "/board/form";
-	}
-	
-	
-	@GetMapping("/list")
-	public String list(@PageableDefault Pageable pageable, Model model) {
-		Page<Board> boardList = boardService.findBoardList(pageable);
-		boardList.stream().forEach(e-> e.getContent());
-		model.addAttribute("boardList", boardList);
-		return "/board/list";
-	}
+    @GetMapping
+    public String boardList(){
+        return "/board/list";
+    }
+
+    @GetMapping
+    public String boardWrite(){
+        return "board/write";
+    }
+
+    @PostMapping("/post")
+    public String write(BoardDto boardDto){
+        boardService.savePost(boardDto);
+        return "board/write";
+    }
+
+
+    @GetMapping
+    public String boardUpdate(){
+        return "/board/update";
+    }
+
+    @GetMapping
+    public String boardDelte(){
+        return "/board/delete";
+    }
+
 }

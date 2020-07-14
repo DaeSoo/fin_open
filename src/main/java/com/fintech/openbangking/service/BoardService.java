@@ -1,29 +1,19 @@
 package com.fintech.openbangking.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import com.fintech.openbangking.domain.Board;
+import com.fintech.openbangking.dto.BoardDto;
 import com.fintech.openbangking.repository.BoardRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+
+@AllArgsConstructor
 @Service
 public class BoardService {
-
-	@Autowired
 	private BoardRepository boardRepository;
-	
-	public Page<Board> findBoardList(Pageable pageable){
-		pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 :pageable.getPageNumber()-1, 
-				pageable.getPageSize());
-		
-		return boardRepository.findAll(pageable);
+
+	@Transactional
+	public Long savePost(BoardDto boardDto) {
+		return boardRepository.save(boardDto.toEntity()).getIdx();
 	}
-	
-	public Board findBoardByIdx(Long idx) {
-		return boardRepository.findById(idx).orElse(new Board());
-	}
-	
 }
